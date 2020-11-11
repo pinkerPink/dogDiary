@@ -1,10 +1,13 @@
+import React from "react";
+
 import DogCard from "./components/dogCard/dogCard";
 import Feeding from "./components/feeding/feeding";
 import WeightTable from "./components/weightTable/weightTable";
 import FeedingTable from "./components/feedingTable/feedingTable";
+import AddWeight from "./components/addWeight/addWeight";
 // import Deworming from "./components/deworming/deworming";
 
-import "./app.css";
+import "./App.css";
 
 const DOGINFO = {
 	breed: "Корги-пемброк",
@@ -28,16 +31,33 @@ const FEED = [
 	{ time: "22:00", count: "40 грамм" },
 ];
 
-function App() {
-	return (
-		<div className="App">
-			<DogCard dogInfo={DOGINFO} />
-			<Feeding />
-			<WeightTable weightTable={WEIGHT} />
-			<FeedingTable feedTable={FEED} />
-			{/* <Deworming/> */}
-		</div>
-	);
-}
+export default class App extends React.Component {
+	constructor(props) {
+		super(props);
+		this.handleWeightAdd = this.handleWeightAdd.bind(this);
+	}
+	
+	state = {
+		lastWeight: WEIGHT[WEIGHT.length - 1].weight,
+	};
 
-export default App;
+	handleWeightAdd(newWeight) {
+		WEIGHT.push(newWeight);
+		this.setState({
+			lastWeight: newWeight.weight,
+		});
+	}
+
+	render() {
+		return (
+			<div className="App">
+				<DogCard dogInfo={DOGINFO} lastWeight={this.state.lastWeight} />
+				<Feeding />
+				<WeightTable weightTable={WEIGHT} />
+				<AddWeight onWeightAdd={this.handleWeightAdd} />
+				<FeedingTable feedTable={FEED} />
+				{/* <Deworming/> */}
+			</div>
+		);
+	}
+}

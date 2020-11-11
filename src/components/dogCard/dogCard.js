@@ -4,7 +4,8 @@ import "./dogCard.css";
 
 export default class DogCard extends React.Component {
 	render() {
-		const { breed, gender, weight, nickname, age } = this.props.dogInfo;
+		const { breed, gender, nickname, age } = this.props.dogInfo;
+		const weight = this.props.lastWeight;
 
 		return (
 			<div>
