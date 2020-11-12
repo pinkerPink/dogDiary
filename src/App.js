@@ -5,6 +5,7 @@ import Feeding from "./components/feeding/feeding";
 import WeightTable from "./components/weightTable/weightTable";
 import FeedingTable from "./components/feedingTable/feedingTable";
 import AddWeight from "./components/addWeight/addWeight";
+import AddFeedTable from "./components/addFeedTable/addFeedTable";
 // import Deworming from "./components/deworming/deworming";
 
 import "./App.css";
@@ -24,21 +25,23 @@ const WEIGHT = [
 ];
 
 const FEED = [
-	{ time: "07:00", count: "40 грамм" },
+	[{ time: "07:00", count: "40 грамм" },
 	{ time: "10:45", count: "40 грамм" },
 	{ time: "14:30", count: "40 грамм" },
 	{ time: "18:15", count: "40 грамм" },
-	{ time: "22:00", count: "40 грамм" },
+	{ time: "22:00", count: "40 грамм" }],
 ];
 
 export default class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.handleWeightAdd = this.handleWeightAdd.bind(this);
+		this.handleFeedAdd = this.handleFeedAdd.bind(this);
 	}
 	
 	state = {
 		lastWeight: WEIGHT[WEIGHT.length - 1].weight,
+		lastFeed: FEED[FEED.length - 1],
 	};
 
 	handleWeightAdd(newWeight) {
@@ -48,6 +51,13 @@ export default class App extends React.Component {
 		});
 	}
 
+	handleFeedAdd(newFeed) {
+		FEED.push(newFeed);
+		this.setState({
+			lastFeed: newFeed,
+		})
+	}
+
 	render() {
 		return (
 			<div className="App">
@@ -55,7 +65,8 @@ export default class App extends React.Component {
 				<Feeding />
 				<WeightTable weightTable={WEIGHT} />
 				<AddWeight onWeightAdd={this.handleWeightAdd} />
-				<FeedingTable feedTable={FEED} />
+				<FeedingTable feedTable={this.state.lastFeed} />
+				<AddFeedTable onFeedAdd={this.handleFeedAdd} />
 				{/* <Deworming/> */}
 			</div>
 		);
