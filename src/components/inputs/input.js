@@ -1,14 +1,5 @@
 import React from "react";
 
-function Inputs(props) {
-	return (
-		<div>
-			<input onChange={props.onTimeChange} placeholder="Время" />
-			<input onChange={props.onCountChange} placeholder="Количество" />
-		</div>
-	);
-}
-
 export default class Input extends React.Component {
 	constructor(props) {
 		super(props);
@@ -42,9 +33,9 @@ export default class Input extends React.Component {
 		};
 		await this.setState({
 			input: input,
-    });
-    
-    const arr = [...this.state.array, this.state.input];
+		});
+
+		const arr = [...this.state.array, this.state.input];
 		await this.setState({
 			array: arr,
 		});
@@ -58,13 +49,17 @@ export default class Input extends React.Component {
 	render() {
 		const inputss = [];
 		for (let i = 0; i < this.props.count; i++) {
-			inputss.push(<Inputs onTimeChange={this.handleTimeChange} onCountChange={this.handleCountChange} />);
+			inputss.push(
+				<div>
+					<input onChange={this.handleTimeChange} placeholder="Время" />
+					<input onChange={this.handleCountChange} placeholder="Количество" />
+				</div>
+			);
 		}
 
 		return (
 			<form onSubmit={this.handleInputs}>
 				{inputss}
-				<input />
 				<button type="submit">Добавить</button>
 			</form>
 		);

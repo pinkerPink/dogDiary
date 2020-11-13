@@ -62,7 +62,7 @@ export default class App extends React.Component {
 		return (
 			<div className="App">
 				<DogCard dogInfo={DOGINFO} lastWeight={this.state.lastWeight} />
-				<Feeding />
+				<Feeding nextFeed={FEED[FEED.length - 1][0].time} />
 				<WeightTable weightTable={WEIGHT} />
 				<AddWeight onWeightAdd={this.handleWeightAdd} />
 				<FeedingTable feedTable={this.state.lastFeed} />
